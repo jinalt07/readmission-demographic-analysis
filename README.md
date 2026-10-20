@@ -72,4 +72,91 @@ Two models were evaluated:
 1. Logistic Regression
 2. XGBoost
 
-Class imbalance was addressed using balanced class weights for Logistic Regression and `scale_pos
+Class imbalance was addressed using balanced class weights for Logistic Regression and `scale_pos_weight` for XGBoost.
+
+Models were evaluated using:
+
+- AUROC
+- AUPRC
+- Precision
+- Recall
+- F1 score
+- Confusion matrix
+
+### Demographic Subgroup Analysis
+
+XGBoost performance was evaluated separately across:
+
+**Race**
+
+- Caucasian
+- African American
+- Asian
+- Hispanic
+- Other
+- Missing race information
+
+**Gender**
+
+- Female
+- Male
+
+**Age**
+
+- 0–39
+- 40–59
+- 60–79
+- 80–100
+
+For each subgroup, the analysis reports representation, positive readmission cases, AUROC, recall, precision, and F1 score.
+
+### Representation Sensitivity Analysis
+
+Race-based sample weighting was used as a sensitivity experiment to investigate whether increasing the influence of less-represented racial groups during training reduced subgroup performance differences.
+
+The weighted model was compared with the original XGBoost model using both overall and race-specific performance metrics.
+
+### Model Interpretation
+
+XGBoost feature importance was used to identify the predictors that contributed most strongly to readmission prediction.
+
+Important predictors included:
+
+- Prior inpatient utilization
+- Hospitalization duration
+- Number of diagnoses
+- Age
+- Medication status
+- Diagnosis categories
+
+### Repository Structure
+
+```text
+readmission-demographic-analysis/
+│
+├── data/
+│   └── README.md
+│
+├── figures/
+│   ├── model_roc_compare.png
+│   ├── model_precision_recall_compare.png
+│   ├── race_representation.png
+│   ├── race_representation_vs_recall.png
+│   ├── race_weighting_recall_comparison.png
+│   └── xgboost_feature_importance.png
+│
+├── results/
+│   ├── model_compare_results.csv
+│   ├── race_subgroup_results.csv
+│   ├── gender_subgroup_results.csv
+│   ├── age_subgroup_results.csv
+│   ├── weighting_sensitivity_results.csv
+│   └── xgboost_feature_importance.csv
+│
+├── src/
+│   └── readmission_analysis.py
+│
+├── .gitignore
+├── README.md
+└── requirements.txt
+```
